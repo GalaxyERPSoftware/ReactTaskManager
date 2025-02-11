@@ -232,7 +232,7 @@ const Profile = () => {
                                              </div>
                                              <div className="detail-item">
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
-                                                 <span>Change By Kishan Parmar</span>
+                                                 <span>Change By khushi mandaliya</span>
                                              </div>
                                          </div>
                                 </div>
