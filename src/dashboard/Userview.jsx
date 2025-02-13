@@ -9,6 +9,7 @@ import { FaUserFriends } from "react-icons/fa";
 import 'react-toastify/dist/ReactToastify.css';
 import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { FaSearchengin } from "react-icons/fa6";
 import { Tabs } from 'antd';
 import config from "./Config";
 import User from "./User";
@@ -62,6 +63,9 @@ const Userview = () => {
     const dashboard = () => { navigate('/dashboard'); }
     const handleprofile = () => navigate('/profile');
     const leaveview = () => navigate('/leave');
+    const  OnSearch = () => {
+        navigate('/search');
+    }
     const handleLogout = () => {
         localStorage.clear();
         navigate('/');
@@ -90,6 +94,9 @@ const Userview = () => {
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
                                 <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                </div>
+                                <div className="desh-btn">
                                     <button onClick={addtask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                                 </div>
                                 <div className="desh-btn">
@@ -107,7 +114,7 @@ const Userview = () => {
                                     </div>
                                 )}
                             </div>
-                            <p className="version-main">V 1.0.4</p>
+                            <p className="version-main">V 1.0.5</p>
                             <div className="log-out-new">
                                 <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                                 <button onClick={handleLogout} className="btn-3" title="logout"><MdOutlineLogout className="log-out-icon" /></button>
@@ -131,3 +138,28 @@ const Userview = () => {
 };
 
 export default Userview;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
