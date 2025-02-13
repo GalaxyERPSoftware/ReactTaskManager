@@ -7,6 +7,7 @@ import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { BiWallet } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 import { FaUserFriends } from "react-icons/fa";
+import { FaSearchengin } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import config from "./Config";
 import { MdOutlineLogout } from "react-icons/md";
@@ -102,6 +103,9 @@ const Leave = () => {
     const dashboard = () => { navigate('/dashboard'); }
     const handleprofile = () => navigate('/profile');
     const leaveview = () => navigate('/leave');
+    const  OnSearch = () => {
+        navigate('/search');
+    }
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -204,6 +208,9 @@ const Leave = () => {
                                 <div className="desh-btn">
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
+                                 <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                </div>
                                 <div className="desh-btn">
                                     <button onClick={addtask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                                 </div>
@@ -220,7 +227,7 @@ const Leave = () => {
                                     <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
                                 </div>
                             </div>
-                            <p className="version-main">V 1.0.4</p>
+                            <p className="version-main">V 1.0.5</p>
                             <div className="log-out-new">
                                 <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                                 <button onClick={handleLogout} className="btn-3" title="logout"><MdOutlineLogout className="log-out-icon" /></button>

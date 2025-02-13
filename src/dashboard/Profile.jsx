@@ -14,6 +14,7 @@ import { LuUserRoundCheck } from "react-icons/lu";
 import { ToastContainer } from "react-toastify";
 import { MdOutlineGrid4X4 } from "react-icons/md";
 import { RiUserSearchFill } from "react-icons/ri";
+import { FaSearchengin } from "react-icons/fa6";
 import { FaMobileScreenButton  } from "react-icons/fa6";
 import { PiUserListBold } from "react-icons/pi";
 import { toast } from "react-toastify";
@@ -157,6 +158,9 @@ const Profile = () => {
     const ondailyview = () => navigate('/dailytask');
     const onuserview = () => navigate('/userview');
     const handleprofile = () => navigate('/profile');
+    const  OnSearch = () => {
+        navigate('/search');
+    }
     
     const handleLogout = () => {
         localStorage.clear();
@@ -183,6 +187,9 @@ const Profile = () => {
                                 <div className="desh-btn">
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
+                                 <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                </div>
                                 <div className="desh-btn">
                                     <button onClick={addTask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                                 </div>
@@ -196,7 +203,7 @@ const Profile = () => {
                                     <button className='dailytaskbtn' onClick={onuserview}><FaUserFriends className="icon-task" /><span className="dash-task">User</span></button>
                                 </div>
                             </div>
-                            <p className="version-main">V 1.0.4</p>
+                            <p className="version-main">V 1.0.5</p>
                             <div className="log-out-new">
                                 <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                                 <button onClick={handleLogout} className="btn-3" title="logout"><MdOutlineLogout className="log-out-icon" /></button>
@@ -229,10 +236,6 @@ const Profile = () => {
                                              <div className="detail-item">
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
                                                  <span>{userData?.ul_PhoneNo || "N/A"}</span>
-                                             </div>
-                                             <div className="detail-item">
-                                                 <label><FaMobileScreenButton  className="icon-profile"/></label>
-                                                 <span>Change By khushi mandaliya</span>
                                              </div>
                                          </div>
                                 </div>
