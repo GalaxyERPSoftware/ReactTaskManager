@@ -233,14 +233,11 @@ const Profile = () => {
                                                  <label><RiUserSearchFill className="icon-profile"/></label>
                                                  <span>{userData?.ul_Role || "N/A"}</span>
                                              </div>
-                                             <div className="detail-item">
+                                             {/* <div className="detail-item">
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
                                                  <span>{userData?.ul_PhoneNo || "N/A"}</span>
-                                             </div>
-                                             <div className="detail-item">
-                                                 <label><FaMobileScreenButton  className="icon-profile"/></label>
-                                                 <span>kishan parmar</span>
-                                             </div>
+                                             </div> */}
+                                            
                                          </div>
                                 </div>
                             </div>
