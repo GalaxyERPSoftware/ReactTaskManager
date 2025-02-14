@@ -234,6 +234,10 @@ const Profile = () => {
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
                                                  <span>Change By Kishan Parmar 2.</span>
                                              </div>
+                                             <div className="detail-item">
+                                                 <label><FaMobileScreenButton  className="icon-profile"/></label>
+                                                 <span>Doing for search testing</span>
+                                             </div>
                                          </div>
                                 </div>
                             </div>
