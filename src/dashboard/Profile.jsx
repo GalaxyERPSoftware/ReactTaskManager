@@ -240,6 +240,7 @@ const Profile = () => {
                                              <div className="detail-item">
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
                                                  <span>kishan</span>
+                                                 <span>sujal</span>
                                              </div>
                                          </div>
                                 </div>
