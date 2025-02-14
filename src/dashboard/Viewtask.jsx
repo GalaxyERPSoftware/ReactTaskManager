@@ -9,6 +9,7 @@ import { AiOutlineFundView } from "react-icons/ai";
 import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { BiWallet } from "react-icons/bi";
 import { MdOutlineLogout } from "react-icons/md";
+import { FaSearchengin } from "react-icons/fa6";
 import 'react-toastify/dist/ReactToastify.css';
 import './deshboard.css';
 import { toast } from "react-toastify";
@@ -329,6 +330,9 @@ const Viewtask = () => {
     const dashboard = () => { navigate('/dashboard'); }
     const handleprofile = () => navigate('/profile');
     const leaveview = () => navigate('/leave'); 
+    const  OnSearch = () => {
+        navigate('/search');
+    }
     const handleLogout = () => {
         localStorage.clear();
         navigate('/');
@@ -370,6 +374,9 @@ const Viewtask = () => {
                                 <div className="desh-btn">
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
+                                 <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                </div>
                                 <div className="desh-btn">
                                     <button onClick={addtask} ><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                                 </div>
@@ -388,7 +395,7 @@ const Viewtask = () => {
                                 </div>
                                 )}
                             </div>
-                            <p className="version-main">V 1.0.4</p>
+                            <p className="version-main">V 1.0.5</p>
                             <div className="log-out-new">
                                 <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                                 <button onClick={handleLogout} className="btn-3" title="logout"><MdOutlineLogout className="log-out-icon" /></button>

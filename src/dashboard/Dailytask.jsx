@@ -5,6 +5,7 @@ import { AiOutlineFundView } from "react-icons/ai";
 import { MdOutlineLogout } from "react-icons/md";
 import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { BiWallet } from "react-icons/bi";
+import { FaSearchengin } from "react-icons/fa6";
 import { FaUserFriends, FaUserAlt } from "react-icons/fa";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -247,6 +248,9 @@ const Dailytask = () => {
     const leaveview = () => {
         navigate('/leave');
     }
+    const  OnSearch = () => {
+        navigate('/search');
+    }
     const handleLogout = () => {
         localStorage.removeItem("firstname");
         localStorage.removeItem("lastname");
@@ -280,6 +284,9 @@ const Dailytask = () => {
                                 <div className="desh-btn">
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
+                                 <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                </div>
                                 <div className="desh-btn">
                                     <button onClick={addtask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                                 </div>
@@ -298,7 +305,7 @@ const Dailytask = () => {
                                 </div>
                                 )}
                             </div>
-                            <p className="version-main">V 1.0.4</p>
+                            <p className="version-main">V 1.0.5</p>
                             <div className="log-out-new">
                                 <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                                 <button onClick={handleLogout} className="btn-3" title="logout"><MdOutlineLogout className="log-out-icon" /></button>
@@ -460,39 +467,39 @@ export default Dailytask;
 
 
 
+// {isModalOpen && (
+//     <div className="modal-overlay">
+//         <div className="modal-content">
 
-{/* <div className="inner">
-                                                <label htmlFor="">From Date:</label>
-                                                <input 
-                                                    type="date" 
-                                                    value={fromDate} 
-                                                    onChange={handleFromDateChange} 
-                                                />
-                                            </div>
-                                            <div className="inner">
-                                               <label htmlFor="">To Date:</label>
-                                                <input 
-                                                    type="date" 
-                                                    value={toDate} 
-                                                    onChange={handleToDateChange} 
-                                                />
-                                            </div> */}
+//             <button className="close-btn" onClick={closeModal}>X</button>
+//             <form action="">
+//                 <div className="remark-div">
+//                     <label htmlFor="reamrk">Remark:</label>
+//                     <textarea name="textarea" id="remark" placeholder="enter your remark"></textarea>
+//                     <button className="submit-search">Submit</button>
+//                 </div>
+//             </form>
 
+//         </div>
+//     </div>
+// )}
 
 
-        //                                      Filter tasks by date range (fromDate and toDate)
-        //     filtered = filtered.filter((task) => {
-        //         const taskDate = new Date(task.Date);
-        //         const from = new Date(fromDate);
-        //         const to = new Date(toDate);
-        //         return taskDate >= from && taskDate <= to;
-        // });
 
 
-        // const handleFromDateChange = (e) => {
-        //     setFromDate(e.target.value);
-        // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
-        // const handleToDateChange = (e) => {
-        //     setToDate(e.target.value);
-        // };

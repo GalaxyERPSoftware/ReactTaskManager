@@ -14,6 +14,7 @@ import Profile from './dashboard/Profile';
 import Leave from './dashboard/Leave';
 import Client from './dashboard/Client';
 import Userview from './dashboard/Userview';
+import Search from './dashboard/Serch';
 // import Kp from './dashboard/Kp';
 // import Img from './img/Img';
 
@@ -34,7 +35,8 @@ root.render(
         <Route path='/profile' element={<Profile/>} />
         <Route path='/leave' element={<Leave/>} />
         <Route path='/userview' element={<Userview/>} />
-        <Route path='/client' element={<Client/>} />  
+        <Route path='/client' element={<Client/>} /> 
+        <Route path='/search' element={<Search/>} />  
         {/* <Route path='/kp' element={<Kp/>} /> */}
 
 
