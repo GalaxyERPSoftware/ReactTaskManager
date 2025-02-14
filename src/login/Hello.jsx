@@ -233,7 +233,7 @@ const Hello = () => {
                                 name="password"
                                 placeholder="Password"
                                 ref={password}
-                                maxLength="10"
+                                // maxLength="10"
                             />
                             {/* <input
                                 type="password"

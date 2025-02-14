@@ -11,6 +11,7 @@ import { BiWallet } from "react-icons/bi";
 import { FaUserFriends, FaTasks } from "react-icons/fa";
 import { MdOutlineLogout, MdPendingActions, MdOutlineMoreTime } from "react-icons/md";
 import { LuUserRoundCheck } from "react-icons/lu";
+import { FaSearchengin } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import config from "./Config";
 
@@ -37,12 +38,12 @@ const Dashboard = () => {
             console.error("User data is missing or invalid.");
         }
     }, []);
-     useEffect(() => {
-            const userData = JSON.parse(localStorage.getItem("user"));
-            if (userData && userData.User) {
-                setUserRole(userData.User.ul_Role);  
-            }
-        }, []);
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem("user"));
+        if (userData && userData.User) {
+            setUserRole(userData.User.ul_Role);
+        }
+    }, []);
 
     const fetchDashboardData = () => {
         const storedUser = localStorage.getItem("user");
@@ -209,6 +210,9 @@ const Dashboard = () => {
     const onuserview = () => navigate('/userview');
     const handleprofile = () => navigate('/profile');
     const leaveview = () => navigate('/leave');
+    const  OnSearch = () => {
+        navigate('/search');
+    }
     return (
         <div className="desh-main">
             <div className="desh-inner-main">
@@ -229,6 +233,9 @@ const Dashboard = () => {
                                 <button onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                             </div>
                             <div className="desh-btn">
+                                <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                            </div>
+                            <div className="desh-btn">
                                 <button onClick={addTask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                             </div>
                             <div className="desh-btn">
@@ -241,13 +248,13 @@ const Dashboard = () => {
                                 <button onClick={userView}><FaUserFriends className="icon-task" /><span className="dash-task">User</span></button>
                             </div>
                             {userRole === "admin" && (
-                            <div className="desh-btn">
-                                <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
-                            </div>
+                                <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
+                                </div>
                             )}
-                            
+
                         </div>
-                        <p className="version-main">V 1.0.4</p>
+                        <p className="version-main">V 1.0.5</p>
                         <div className="log-out-new">
                             <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                             <button className="btn-3" title="logout" onClick={handleLogout}><MdOutlineLogout className="log-out-icon" /></button>
@@ -257,7 +264,7 @@ const Dashboard = () => {
                 <div className="desh-child">
                     <div className="desh-inner-child">
                         <div className="all-divs">
-                        {/* <p  style={{marginBottom:'20px',fontWeight:'600',fontSize:'22px'}} data-discover="true">Dashboard</p> */}
+                            {/* <p  style={{marginBottom:'20px',fontWeight:'600',fontSize:'22px'}} data-discover="true">Dashboard</p> */}
 
                             {loading ? (
                                 <p>Loading...</p>
@@ -275,8 +282,8 @@ const Dashboard = () => {
                                             </span>
                                         </p>
                                     </div>
-                                    
-                                    <div className="dashbord-inner-child" style={{ display: 'flex', flexWrap:'wrap' }} >
+
+                                    <div className="dashbord-inner-child" style={{ display: 'flex', flexWrap: 'wrap' }} >
                                         <div className="item-d" style={{ borderColor: '#4fb054' }}>
                                             <div className="item-inner">
                                                 <p className="title">Total Users</p><AiOutlineUsergroupAdd className="dashboard-icon" />
@@ -310,38 +317,38 @@ const Dashboard = () => {
                                             </div>
                                         )}
                                         {userRole === "admin" && (
-                                        
-                                        <div className="item-d">
-                                            <div className="item-inner">
-                                                <p className="title">Employee On Leave</p>
-                                                <LuUserRoundCheck className="dashboard-icon-2" style={{ color: '#fba01c', marginLeft:'109px'}} />
+
+                                            <div className="item-d">
+                                                <div className="item-inner">
+                                                    <p className="title">Employee On Leave</p>
+                                                    <LuUserRoundCheck className="dashboard-icon-2" style={{ color: '#fba01c', marginLeft: '109px' }} />
+                                                </div>
+                                                <p className="data-dash">{attendanceData?.leave?.toLocaleString() || "N/A"}</p>  {/* Use the 'leave' state here instead of dashboardData.leave */}
+                                                <div className="icon-inner" onClick={onuserview}>
+                                                    <span style={{ display: 'flex', color: '#fba01c', border: '2px solid #fba01c', opacity: '0.3', padding: '5px 10px', borderRadius: '7px' }}>
+                                                        <p className="view-dashboard" style={{ marginRight: '3.5px', color: '#fba01c' }}>view</p>
+                                                        <FaAngleRight className="icon-dash-view-3" style={{ color: '#fba01c' }} />
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <p className="data-dash">{attendanceData?.leave?.toLocaleString() || "N/A"}</p>  {/* Use the 'leave' state here instead of dashboardData.leave */}
-                                            <div className="icon-inner" onClick={onuserview}>
-                                                <span style={{ display: 'flex', color: '#fba01c', border: '2px solid #fba01c', opacity: '0.3', padding: '5px 10px', borderRadius: '7px' }}>
-                                                    <p className="view-dashboard" style={{ marginRight: '3.5px', color: '#fba01c' }}>view</p>
-                                                    <FaAngleRight className="icon-dash-view-3" style={{ color: '#fba01c' }} />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
+
                                         )}
                                         {userRole === "admin" && (
-                                        
-                                        <div className="item-d">
-                                            <div className="item-inner">
-                                                <p className="title">Pending Leave Request:</p>
-                                                <LuUserRoundCheck className="dashboard-icon-2" style={{ color: '#fba01c', marginLeft:'69px'}} />
+
+                                            <div className="item-d">
+                                                <div className="item-inner">
+                                                    <p className="title">Pending Leave Request:</p>
+                                                    <LuUserRoundCheck className="dashboard-icon-2" style={{ color: '#fba01c', marginLeft: '69px' }} />
+                                                </div>
+                                                <p className="data-dash">{attendanceData?.pendingleave?.toLocaleString() || "N/A"}</p>  {/* Use the 'leave' state here instead of dashboardData.leave */}
+                                                <div className="icon-inner" onClick={onuserview}>
+                                                    <span style={{ display: 'flex', color: '#fba01c', border: '2px solid #fba01c', opacity: '0.3', padding: '5px 10px', borderRadius: '7px' }}>
+                                                        <p className="view-dashboard" style={{ marginRight: '3.5px', color: '#fba01c' }}>view</p>
+                                                        <FaAngleRight className="icon-dash-view-3" style={{ color: '#fba01c' }} />
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <p className="data-dash">{attendanceData?.pendingleave?.toLocaleString() || "N/A"   }</p>  {/* Use the 'leave' state here instead of dashboardData.leave */}
-                                            <div className="icon-inner" onClick={onuserview}>
-                                                <span style={{ display: 'flex', color: '#fba01c', border: '2px solid #fba01c', opacity: '0.3', padding: '5px 10px', borderRadius: '7px' }}>
-                                                    <p className="view-dashboard" style={{ marginRight: '3.5px', color: '#fba01c' }}>view</p>
-                                                    <FaAngleRight className="icon-dash-view-3" style={{ color: '#fba01c' }} />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
+
                                         )}
 
 
