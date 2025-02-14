@@ -239,7 +239,7 @@ const Profile = () => {
                                              </div>
                                              <div className="detail-item">
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
-                                                 <span>sujal</span>
+                                                 <span>kishan parmar</span>
                                              </div>
                                          </div>
                                 </div>
