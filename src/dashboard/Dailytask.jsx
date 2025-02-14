@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuNotebookPen } from "react-icons/lu";
 import { AiOutlineFundView } from "react-icons/ai";
@@ -17,13 +17,18 @@ const Dailytask = () => {
     const [userLastName, setUserLastName] = useState("");
     const [attendByUsers, setAttendByUsers] = useState([]);
         const [userRole, setUserRole] = useState(""); // State for role
+         // Create a state variable to store the data
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
     
-    const [clients, setClients] = useState([]);
+    // const [clients, setClients] = useState([]);
     const [selectedCompany, setSelectedCompany] = useState("");
     const [selectedCreatedBy, setSelectedCreatedBy] = useState("");
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [fromDate, setFromDate] = useState(() => {
         const today = new Date().toISOString().split("T")[0];
         return today;
@@ -35,6 +40,8 @@ const Dailytask = () => {
     const [selectedAttendBy, setSelectedAttendBy] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("1");
     const navigate = useNavigate();
+
+    const clientNameRef = useRef();
 
     const handleStatusChange = (value) => {
         setSelectedStatus(value);
@@ -151,9 +158,12 @@ const Dailytask = () => {
         const storedUser = localStorage.getItem("user");
         const token = localStorage.getItem("accesstoken");
         if (storedUser && token) {
-            const params = {
-                companyid: "1002"
-            };
+            // const params = {
+            //     companyid: "1002"
+            // };
+            const userData = JSON.parse(storedUser);
+            const params = new FormData();
+            params.set("companyid", userData.User.CompanyId);
 
             // axios.post("http://192.168.10.20:8082/api/Task/getclient", params, {
             axios.post(`${config.BASE_URL}/Task/getclient`, params, {
@@ -218,6 +228,8 @@ const Dailytask = () => {
             setUserRole(userData.User.ul_Role);  
         }
     }, []);
+
+    
     
 
     useEffect(() => {
@@ -261,7 +273,6 @@ const Dailytask = () => {
             navigate("/");
         }, 500);
     };
-
     return (
         <>
             <div className="desh-main">
@@ -323,32 +334,15 @@ const Dailytask = () => {
                                         <div className="main-div-date-info">
                                             <div className="inner">
                                                 <label htmlFor="fromdate-input">From Date:</label>
-                                                <input
-                                                    type="date"
-                                                    id="fromdate-input"
-                                                    className="custom-date-input"
-                                                    value={fromDate}
-                                                    onChange={(e) => setFromDate(e.target.value)}
-                                                />
+                                                <input type="date" id="fromdate-input" className="custom-date-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)}/>
                                             </div>
                                             <div className="inner">
                                                 <label htmlFor="todate-input">To Date:</label>
-                                                <input
-                                                    type="date"
-                                                    id="todate-input"
-                                                    className="custom-date-input"
-                                                    value={toDate}
-                                                    onChange={(e) => setToDate(e.target.value)}
-                                                />
+                                                <input type="date" id="todate-input" className="custom-date-input" value={toDate} onChange={(e) => setToDate(e.target.value)}/>
                                             </div>
                                             <div className="inner" id="main1">
                                                 <label htmlFor="status-select-1">Status:</label>
-                                                <select
-                                                    id="status-select-1"
-                                                    className="custom-select"
-                                                    value={selectedStatus}
-                                                    onChange={(e) => handleStatusChange(e.target.value)}
-                                                >
+                                                <select id="status-select-1" className="custom-select" value={selectedStatus} onChange={(e) => handleStatusChange(e.target.value)}>
                                                     <option value="1">All</option>
                                                     <option value="P">Pending</option>
                                                     <option value="I">In Progress</option>
@@ -357,12 +351,7 @@ const Dailytask = () => {
                                             </div>
                                             <div className="inner">
                                                 <label htmlFor="createdby-select">Created By:</label>
-                                                <select
-                                                    id="createdby-select"
-                                                    className="custom-select"
-                                                    value={selectedCreatedBy}
-                                                    onChange={(e) => handleCreatedByChange(e.target.value)}
-                                                >
+                                                <select id="createdby-select" className="custom-select" value={selectedCreatedBy} onChange={(e) => handleCreatedByChange(e.target.value)}>
                                                     <option value="">All</option>
                                                     {attendByUsers.length > 0 ? (
                                                         attendByUsers.map((user) => (
@@ -377,12 +366,7 @@ const Dailytask = () => {
                                             </div>
                                             <div className="inner">
                                                 <label htmlFor="attendby-select">Assign To:</label>
-                                                <select
-                                                    id="attendby-select"
-                                                    className="custom-select"
-                                                    value={selectedAttendBy}
-                                                    onChange={(e) => handleAttendByChange(e.target.value)}
-                                                >
+                                                <select id="attendby-select" className="custom-select" value={selectedAttendBy}onChange={(e) => handleAttendByChange(e.target.value)}>
                                                     <option value="">All</option>
                                                     {attendByUsers.length > 0 ? (
                                                         attendByUsers.map((user) => (
@@ -394,6 +378,17 @@ const Dailytask = () => {
                                                         <option value="">No users available</option>
                                                     )}
                                                 </select>
+                                            </div>
+                                            <div className="inner">
+                                            <label htmlFor="clientName" >Client Name:</label>
+                                                    <select ref={clientNameRef} id="clientName" name="clientName" className="custom-select">
+                                                        <option value="">Select Client</option>
+                                                        {clients.map((client) => (
+                                                            <option key={client.CompanyClientId} value={client.CompanyClientId}>
+                                                                {client.ClientName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                             </div>
                                         </div>
                                         <div className="main-div-table">
@@ -454,7 +449,6 @@ const Dailytask = () => {
         </>
     );
 };
-
 export default Dailytask;
 
 
