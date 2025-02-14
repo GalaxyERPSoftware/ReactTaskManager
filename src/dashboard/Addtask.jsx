@@ -8,6 +8,7 @@ import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaUserFriends } from "react-icons/fa";
+import { FaSearchengin } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 // import Dashboard from "./Dashboard";
@@ -31,12 +32,12 @@ const Addtask = () => {
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (userData && userData.User) {
-            setUserRole(userData.User.ul_Role);  
+            setUserRole(userData.User.ul_Role);
         }
     }, []);
     const [userData, setUserData] = useState(null);
-        const [userRole, setUserRole] = useState(""); // State for role
-    
+    const [userRole, setUserRole] = useState(""); // State for role
+
     const [accessToken, setAccessToken] = useState(null);
     const [clients, setClients] = useState([]);
     const [attendByUsers, setAttendByUsers] = useState([]);
@@ -107,7 +108,7 @@ const Addtask = () => {
                 }
             })
                 .then((response) => {
-                    if (response.data && response.data.Users ) {
+                    if (response.data && response.data.Users) {
                         const filteredUsers = response.data.Users.filter(user =>
                             user.ul_IsActive
                         );
@@ -213,7 +214,7 @@ const Addtask = () => {
             toast.error("Please Select Task Category.");
             return;
         }
-       
+
         const params = new FormData();
         params.set("companyid", userData.User.CompanyId);
         params.set("userloginid", userData.User.UserLoginId);
@@ -276,7 +277,7 @@ const Addtask = () => {
             });
     };
 
-    
+
 
     const handleLogout = () => {
         localStorage.clear();
@@ -289,6 +290,9 @@ const Addtask = () => {
     const dashboard = () => { navigate('/dashboard'); }
     const handleprofile = () => navigate('/profile');
     const leaveview = () => navigate('/leave');
+    const  OnSearch = () => {
+        navigate('/search');
+    }
     return (
         <>
             <div className="desh-main">
@@ -310,6 +314,9 @@ const Addtask = () => {
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
                                 <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                </div>
+                                <div className="desh-btn">
                                     <button onClick={addtask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
                                 </div>
                                 <div className="desh-btn">
@@ -322,12 +329,12 @@ const Addtask = () => {
                                     <button className='dailytaskbtn' onClick={userview}><FaUserFriends className="icon-task" /><span className="dash-task">User</span></button>
                                 </div>
                                 {userRole === "admin" && (
-                                <div className="desh-btn">
-                                    <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
-                                </div>
+                                    <div className="desh-btn">
+                                        <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
+                                    </div>
                                 )}
                             </div>
-                            <p className="version-main">V 1.0.4</p>
+                            <p className="version-main">V 1.0.5</p>
                             <div className="log-out-new">
                                 <button className="btn-profile" onClick={handleprofile}><FaUserAlt className="icon-pro" /></button>
                                 <button onClick={handleLogout} className="btn-3" title="logout"><MdOutlineLogout className="log-out-icon" /></button>
