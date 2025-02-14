@@ -78,7 +78,6 @@ const Viewtask = () => {
              // Add date filter if startDate or endDate is set
              if (startDate) params.set("startDate", startDate);
              if (endDate) params.set("endDate", endDate);
-
             if (status) {
                 params.set("status", status);
             }
@@ -94,11 +93,8 @@ const Viewtask = () => {
                         setTasks(response.data.Task);
                         setFilteredTasks(response.data.Task);
                         // console.log(response.data);
-                        
-
                     } else {
                         console.error("No tasks found:", response?.data?.message || "Unknown error");
-
                     }
                 })
                 .catch((error) => {

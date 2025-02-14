@@ -16,13 +16,12 @@ const Dailytask = () => {
     const [userFirstName, setUserFirstName] = useState("");
     const [userLastName, setUserLastName] = useState("");
     const [attendByUsers, setAttendByUsers] = useState([]);
-        const [userRole, setUserRole] = useState(""); // State for role
-         // Create a state variable to store the data
-  const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-    
+    const [userRole, setUserRole] = useState(""); // State for role
+    const [clients, setClients] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedStatus, setSelectedStatus] = useState("1");
+    const [selectedClient, setSelectedClient] = useState(""); 
+    const [error, setError] = useState(null);
     // const [clients, setClients] = useState([]);
     const [selectedCompany, setSelectedCompany] = useState("");
     const [selectedCreatedBy, setSelectedCreatedBy] = useState("");
@@ -38,33 +37,30 @@ const Dailytask = () => {
         return today;
     });
     const [selectedAttendBy, setSelectedAttendBy] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("1");
+    // const [selectedStatus, setSelectedStatus] = useState("1");
     const navigate = useNavigate();
-
     const clientNameRef = useRef();
-
+    // Handle client selection change
+    const handleClientChange = (value) => {
+        setSelectedClient(value);
+        filterTasks(selectedStatus, selectedAttendBy, selectedCreatedBy, value); // Re-filter with the selected client
+    };
     const handleStatusChange = (value) => {
         setSelectedStatus(value);
         filterTasks(value, selectedAttendBy, selectedCreatedBy); // Re-filter with the new status
     };
-
     // Handle "Assign To" change
     const handleAttendByChange = (value) => {
         setSelectedAttendBy(value);
         filterTasks(selectedStatus, value, selectedCreatedBy); // Re-filter with the new "Assign To"
     };
-
     // Handle "Created By" change
     const handleCreatedByChange = (value) => {
         setSelectedCreatedBy(value);
         filterTasks(selectedStatus, selectedAttendBy, value); // Re-filter with the new "Create By"
     };
-
-
-    const filterTasks = (status, assignTo, createdBy) => {
-
+    const filterTasks = (status, assignTo, createdBy,client) => {
         let filtered = [...tasks];
-
         // Filter by status
         if (status !== "1") {
             filtered = filtered.filter((task) => task.Status.toLowerCase() === status.toLowerCase());
@@ -83,9 +79,12 @@ const Dailytask = () => {
                 return createdByName === createdBy;
             });
         }
+        // Filter by client
+        if (client) {
+            filtered = filtered.filter((task) => task.ClientName === client);  // Match client name
+        }
         setFilteredTasks(filtered);
     };
-
     const formatDate = (date) => {
         if (date) {
             const d = new Date(date);
@@ -93,11 +92,9 @@ const Dailytask = () => {
         }
         return "";
     };
-
     const fetchTasks = () => {
         const storedUser = localStorage.getItem("user");
         const token = localStorage.getItem("accesstoken");
-
         if (!token) {
             console.error("Missing user data or token in localStorage.");
             setTimeout(() => {
@@ -105,12 +102,10 @@ const Dailytask = () => {
             }, 0);
             return;
         }
-
         if (storedUser) {
             const userData = JSON.parse(storedUser);
             const params = new FormData();
             params.set("companyid", userData.User.CompanyId);
-
             if (fromDate && toDate) {
                 params.set("fromdate", formatDate(fromDate));
                 params.set("todate", formatDate(toDate));
@@ -119,7 +114,6 @@ const Dailytask = () => {
                 return;
             }
             setLoading(true);
-
             axios
                 // .post("http://192.168.10.20:8082/api/Report/dailytaskreport", params, {
                 .post(`${config.BASE_URL}/Report/dailytaskreport`, params, {
@@ -153,18 +147,13 @@ const Dailytask = () => {
                 });
         }
     };
-
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         const token = localStorage.getItem("accesstoken");
         if (storedUser && token) {
-            // const params = {
-            //     companyid: "1002"
-            // };
             const userData = JSON.parse(storedUser);
             const params = new FormData();
             params.set("companyid", userData.User.CompanyId);
-
             // axios.post("http://192.168.10.20:8082/api/Task/getclient", params, {
             axios.post(`${config.BASE_URL}/Task/getclient`, params, {
                 headers: {
@@ -184,7 +173,6 @@ const Dailytask = () => {
                 });
         }
     }, []);
-
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const token = localStorage.getItem('accesstoken');
@@ -212,7 +200,6 @@ const Dailytask = () => {
                 });
         }
     }, []);
-
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (userData && userData.User) {
@@ -225,50 +212,27 @@ const Dailytask = () => {
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (userData && userData.User) {
-            setUserRole(userData.User.ul_Role);  
+            setUserRole(userData.User.ul_Role);
         }
     }, []);
-
-    
-    
-
     useEffect(() => {
         if (fromDate && toDate) {
             fetchTasks();
         }
     }, [fromDate, toDate]);
-
-    const addtask = () => {
-        navigate('/addtask');
-    };
-    const viewtask = () => {
-        navigate('/viewtask');
-    };
-    const dailytask = () => {
-        navigate('/dailytask');
-    };
-    const userview = () => {
-        navigate('/userview');
-    };
-
-    const dashboard = () => {
-        navigate('/dashboard');
-    };
-    const handleprofile = () => {
-        navigate('/profile');
-    };
-    const leaveview = () => {
-        navigate('/leave');
-    }
-    const  OnSearch = () => {
-        navigate('/search');
-    }
+    const addtask = () => { navigate('/addtask'); };
+    const viewtask = () => { navigate('/viewtask'); };
+    const dailytask = () => { navigate('/dailytask'); };
+    const userview = () => { navigate('/userview'); };
+    const dashboard = () => { navigate('/dashboard'); };
+    const handleprofile = () => { navigate('/profile'); };
+    const leaveview = () => { navigate('/leave'); }
+    const OnSearch = () => { navigate('/search'); }
     const handleLogout = () => {
         localStorage.removeItem("firstname");
         localStorage.removeItem("lastname");
         localStorage.removeItem("accesstoken");
         localStorage.removeItem("user");
-
         setTimeout(() => {
             navigate("/");
         }, 500);
@@ -282,7 +246,7 @@ const Dailytask = () => {
                             <div className="desh-logo">
                                 <img src="/assets/img/Galaxy.png" alt="" />
                                 <div className="user-info">
-                                    {userFirstName && userLastName? (
+                                    {userFirstName && userLastName ? (
                                         <span>
                                             {userFirstName} {userLastName}
                                         </span>
@@ -295,8 +259,8 @@ const Dailytask = () => {
                                 <div className="desh-btn">
                                     <button className='dailytaskbtn' onClick={dashboard}><RiDashboardHorizontalFill className="icon-task" /><span className="dash-task">Dashboard</span></button>
                                 </div>
-                                 <div className="desh-btn">
-                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin  className="icon-task" /><span className="dash-task">Search</span></button>
+                                <div className="desh-btn">
+                                    <button className='dailytaskbtn' onClick={OnSearch}><FaSearchengin className="icon-task" /><span className="dash-task">Search</span></button>
                                 </div>
                                 <div className="desh-btn">
                                     <button onClick={addtask}><LuNotebookPen className="icon-task" /><span className="dash-task">Add Task</span></button>
@@ -311,9 +275,9 @@ const Dailytask = () => {
                                     <button className='dailytaskbtn' onClick={userview}><FaUserFriends className="icon-task" /><span className="dash-task">User</span></button>
                                 </div>
                                 {userRole === "admin" && (
-                                <div className="desh-btn">
-                                    <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
-                                </div>
+                                    <div className="desh-btn">
+                                        <button className='dailytaskbtn' onClick={leaveview}><FaUserFriends className="icon-task" /><span className="dash-task">LeaveRequest</span></button>
+                                    </div>
                                 )}
                             </div>
                             <p className="version-main">V 1.0.5</p>
@@ -327,18 +291,17 @@ const Dailytask = () => {
                     <div className="desh-child">
                         <div className="desh-inner-child">
                             <div className="all-divs">
-                            <p  style={{marginBottom:'20px',fontWeight:'600',fontSize:'22px'}} data-discover="true">Daily Task</p>
-
+                                <p style={{ marginBottom: '20px', fontWeight: '600', fontSize: '22px' }} data-discover="true">Daily Task</p>
                                 <div className="viewtask-main-page">
                                     <div className="view-task-main-inner">
                                         <div className="main-div-date-info">
                                             <div className="inner">
                                                 <label htmlFor="fromdate-input">From Date:</label>
-                                                <input type="date" id="fromdate-input" className="custom-date-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)}/>
+                                                <input type="date" id="fromdate-input" className="custom-date-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
                                             </div>
                                             <div className="inner">
                                                 <label htmlFor="todate-input">To Date:</label>
-                                                <input type="date" id="todate-input" className="custom-date-input" value={toDate} onChange={(e) => setToDate(e.target.value)}/>
+                                                <input type="date" id="todate-input" className="custom-date-input" value={toDate} onChange={(e) => setToDate(e.target.value)} />
                                             </div>
                                             <div className="inner" id="main1">
                                                 <label htmlFor="status-select-1">Status:</label>
@@ -366,7 +329,7 @@ const Dailytask = () => {
                                             </div>
                                             <div className="inner">
                                                 <label htmlFor="attendby-select">Assign To:</label>
-                                                <select id="attendby-select" className="custom-select" value={selectedAttendBy}onChange={(e) => handleAttendByChange(e.target.value)}>
+                                                <select id="attendby-select" className="custom-select" value={selectedAttendBy} onChange={(e) => handleAttendByChange(e.target.value)}>
                                                     <option value="">All</option>
                                                     {attendByUsers.length > 0 ? (
                                                         attendByUsers.map((user) => (
@@ -380,15 +343,15 @@ const Dailytask = () => {
                                                 </select>
                                             </div>
                                             <div className="inner">
-                                            <label htmlFor="clientName" >Client Name:</label>
-                                                    <select ref={clientNameRef} id="clientName" name="clientName" className="custom-select">
-                                                        <option value="">Select Client</option>
-                                                        {clients.map((client) => (
-                                                            <option key={client.CompanyClientId} value={client.CompanyClientId}>
-                                                                {client.ClientName}
-                                                            </option>
-                                                        ))}
-                                                    </select>
+                                                <label htmlFor="clientName">Client Name:</label>
+                                                <select ref={clientNameRef} id="clientName" className="custom-select" value={selectedClient} onChange={(e) => handleClientChange(e.target.value)}>
+                                                    <option value="">Select Client</option>
+                                                    {clients.map((client) => (
+                                                        <option key={client.CompanyClientId} value={client.ClientName}>
+                                                            {client.ClientName}
+                                                        </option>
+                                                    ))}
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="main-div-table">
@@ -496,4 +459,3 @@ export default Dailytask;
 
 
 
-        

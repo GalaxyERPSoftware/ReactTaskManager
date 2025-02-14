@@ -237,12 +237,6 @@ const Profile = () => {
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
                                                  <span>{userData?.ul_PhoneNo || "N/A"}</span>
                                              </div>
-                                             <div className="detail-item">
-                                                 <label><FaMobileScreenButton  className="icon-profile"/></label>
-                                                 <span>khushi</span>
-                                                 <span>sujal</span>
-                                                 <span>sujal jethava</span>
-                                             </div>
                                          </div>
                                 </div>
                             </div>
