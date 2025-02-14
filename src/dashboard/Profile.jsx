@@ -241,6 +241,7 @@ const Profile = () => {
                                                  <label><FaMobileScreenButton  className="icon-profile"/></label>
                                                  <span>kishan</span>
                                                  <span>sujal</span>
+                                                 <span>khushi</span>
                                              </div>
                                          </div>
                                 </div>
