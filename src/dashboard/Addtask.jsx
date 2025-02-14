@@ -438,7 +438,6 @@ const Addtask = () => {
                                             />
 
                                             {/* Remark with text direction set to left */}
-
                                             <label htmlFor="remark">Remark:</label>
                                             <textarea
                                                 ref={taskRemarkRef}
@@ -451,7 +450,6 @@ const Addtask = () => {
                                             <button type="submit" className="addtaskbtn" style={{ marginTop: "20px" }}>
                                                 Add Task
                                             </button>
-
                                         </form>
                                     </div>
                                 </div>
